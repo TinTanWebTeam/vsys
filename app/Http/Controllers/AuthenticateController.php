@@ -17,8 +17,17 @@ class AuthenticateController extends Controller
 {
     public function authenticate(Request $request)
     {
-        $user = User::first();
+        $username = $request->input('username');
+        $password = $request->input('password');
+
+        $user = User::where('username', $username)->first();
+
         if ($user) {
+            $password_check = Hash::check($password, $user->password);
+            if (!$password_check) {
+                return response()->json(['error' => 'password is not correct'], 401);
+            }
+
             try {
                 if (!$token = JWTAuth::fromUser($user)) {
                     return response()->json(['error' => 'could_not_create_token'], 401);
@@ -27,7 +36,7 @@ class AuthenticateController extends Controller
                 return response()->json(['error' => 'could_not_create_token'], 500);
             }
         } else {
-            return response()->json(['error' => 'invalid_credentials'], 401);
+            return response()->json(['error' => 'user is not exist'], 401);
         }
         return response()->json(['token' => $token], 201);
     }

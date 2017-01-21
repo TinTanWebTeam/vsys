@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { HttpClientService } from '../../services/httpClient/httpClient.service';
 import { Subscription } from 'rxjs';
 import { Role } from '../../models/role.model';
 
@@ -11,10 +12,10 @@ import { Role } from '../../models/role.model';
 export class AsideComponent implements OnInit {
 
   private roles: string[] = [];
-  private _authSubscription: Subscription;
+  private _httpClientSubscription: Subscription;
 
-  constructor(private authenticationService: AuthenticationService) {
-    this._authSubscription = this.authenticationService.authenticate$.subscribe(
+  constructor(private httpClientService: HttpClientService, private authenticationService: AuthenticationService) {
+    this._httpClientSubscription = this.httpClientService.httpClient$.subscribe(
       status => {
         console.log("%c Navigation", "background: green; color: white");
         console.log(status);
@@ -34,6 +35,14 @@ export class AsideComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  checkRole(roleName: string) {
+    for(let i = 0; i < this.roles.length; i++) {
+      if(this.roles[i] == roleName)
+        return true;
+    }
+    return false;
   }
 
 }

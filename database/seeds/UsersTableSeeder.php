@@ -15,14 +15,14 @@ class UsersTableSeeder extends Seeder
         	'username' => 'admin',
             'fullname' => 'admin',
         	'email' => 'admin@gmail.com',
-        	'password' => encrypt('123456',Config::get('app.key')),
+        	'password' => Hash::make('123456'),
             'position_id' => 0
         ]);
         \App\User::create([
         	'username' => 'user',
             'fullname' => 'user',
         	'email' => 'user@gmail.com',
-        	'password' => encrypt('123456',Config::get('app.key')),
+        	'password' => Hash::make('123456'),
             'position_id' => 0
         ]);
     }

@@ -58,38 +58,12 @@
     <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
       <span>Categories</span>
     </li>
-    <li *ngIf="roles.includes('Dashboard')" routerLinkActive="active">
-      <a routerLink="/dashboard">
+    <li *ngFor="let name of roles" routerLinkActive="active">
+      <a routerLink="/dashboard" *ngIf="checkRole(name)">
         <i class="glyphicon glyphicon-signal"></i>
-        <span>Dashboard</span>
+        <span>{{ name }}</span>
       </a>
     </li>
-    <li *ngIf="roles.includes('ProductType')" routerLinkActive="active">
-      <a routerLink="/product-type">
-        <i class="glyphicon glyphicon-signal"></i>
-        <span>Product Type</span>
-      </a>
-    </li>
-    <li *ngIf="roles.includes('Product')" routerLinkActive="active">
-      <a routerLink="/product">
-        <i class="glyphicon glyphicon-th"></i>
-        <span>Product</span>
-      </a>
-    </li>
-    <li *ngIf="roles.includes('Supplier')" routerLinkActive="active">
-      <a routerLink="/supplier">
-        <i class="glyphicon glyphicon-th"></i>
-        <span>Supplier</span>
-      </a>
-    </li>
-    <li *ngIf="roles.includes('Staff')" routerLinkActive="active">
-      <a routerLink="/staff">
-        <i class="glyphicon glyphicon-th"></i>
-        <span>Staff</span>
-      </a>
-    </li>
-
-    <li class="line dk"></li>
   </ul>
 </nav>
 <!-- nav -->

@@ -42,10 +42,8 @@ export class LoginComponent implements OnInit {
         this.httpClientService.createHeaderFromToken(token);
         this.httpClientService.get('/api/authenticate').subscribe(
             (success: Response) => {
-                console.log(success.json());
-                
                 /* SAVE USER */
-                this.authenticationService.authenticateUser._id = success.json()['user']['id'];
+                this.authenticationService.authenticateUser.id = success.json()['user']['id'];
                 this.authenticationService.authenticateUser.username = success.json()['user']['username'];
                 this.authenticationService.authenticateUser.created_at = success.json()['user']['created_at'];
                 this.authenticationService.authenticateUser.updated_at = success.json()['user']['updated_at'];
@@ -56,6 +54,13 @@ export class LoginComponent implements OnInit {
                 for (let i = 0; i < array_role.length; i++) {
                     this.authenticationService.authenticateRole.push(array_role[i]);
                 }
+
+                console.log("%c LoginComponent", "color: purple");
+                console.log("%c Role", "color: purple");
+                console.log(this.authenticationService.authenticateRole);
+                console.log("%c User", "color: purple");
+                console.log(this.authenticationService.authenticateUser);
+                console.log("%c --------------", "color: purple");
 
                 /* SAVE AUTH */
                 this.authenticationService.createAuthLocalStorage();

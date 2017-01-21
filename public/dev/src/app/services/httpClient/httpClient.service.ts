@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Http, Headers, Response } from "@angular/http";
 import { Subscription, Observable } from "rxjs";
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
 import { AuthenticationService } from "../authentication/authentication.service";
 import { Router } from "@angular/router";
 
@@ -9,6 +11,9 @@ export class HttpClientService {
     private _http: Http;
     private _headers: Headers = new Headers();
     private _authSubscription: Subscription;
+
+    public httpClient = new BehaviorSubject<Boolean>(false);
+    public httpClient$ = this.httpClient.asObservable();
 
     constructor(private http: Http, private authenticationService: AuthenticationService, private router: Router) {
         this._http = http;
@@ -26,7 +31,7 @@ export class HttpClientService {
                     this.get('/api/authenticate').subscribe(
                         (success: Response) => {
                             /* SAVE USER */
-                            authenticationService.authenticateUser._id = success.json()['user']['id'];
+                            authenticationService.authenticateUser.id = success.json()['user']['id'];
                             authenticationService.authenticateUser.username = success.json()['user']['username'];
                             authenticationService.authenticateUser.created_at = success.json()['user']['created_at'];
                             authenticationService.authenticateUser.updated_at = success.json()['user']['updated_at'];
@@ -39,8 +44,10 @@ export class HttpClientService {
                             }
 
                             /* SAVE AUTH */
-                            // authenticationService.createAuthLocalStorage();
+                            authenticationService.createAuthLocalStorage();
                             // this.authenticationService.notifyAuthenticate(true);
+
+                            this.notifyHttpClient(true);
 
                             console.log("%c Role", "color: green");
                             console.log(authenticationService.authenticateRole);
@@ -54,11 +61,13 @@ export class HttpClientService {
                         (error: Response) => {
                             authenticationService.clearAuthLocalStorage();
                             authenticationService.notifyAuthenticate(false);
+                            this.notifyHttpClient(false);
                         }
                     )
                     
                 } else {
                     this.removeHeader();
+                    this.notifyHttpClient(false);
                 }
             }
         );
@@ -100,6 +109,10 @@ export class HttpClientService {
         return this._http.delete(url, {
             headers: this._headers
         })
+    }
+
+    notifyHttpClient(status: Boolean): void {
+        this.httpClient.next(status);
     }
 
 }
