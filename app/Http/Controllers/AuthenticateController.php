@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Role;
+use App\SubRole;
 use Hash;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -27,7 +29,7 @@ class AuthenticateController extends Controller
         } else {
             return response()->json(['error' => 'invalid_credentials'], 401);
         }
-        return response()->json(['success' => $token], 201);
+        return response()->json(['token' => $token], 201);
     }
 
     public function getAuthenticatedUser()
@@ -43,6 +45,11 @@ class AuthenticateController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'token_absent'], $e->getStatusCode());
         }
-        return response()->json(['success' => $user], 201);
+
+        $subroles = SubRole::where('user_id', $user->id)->pluck('role_id')->toArray();
+
+        $roles = Role::whereIn('id', $subroles)->get()->toArray();
+
+        return response()->json(['user' => $user, 'roles' => $roles], 201);
     }
 }

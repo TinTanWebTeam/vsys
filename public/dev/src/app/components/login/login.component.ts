@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     }
 
     public logIn(): void {
-        this.httpClientService.post('/api/user/login', this.user).subscribe(
+        this.httpClientService.post('/api/authenticate', this.user).subscribe(
             (success: Response) => {
                 // /* SAVE TOKEN */
                 this.authenticationService.authenticateToken = success.json()['token'];
@@ -40,16 +40,18 @@ export class LoginComponent implements OnInit {
 
     public getUserLogin(token: string): void {
         this.httpClientService.createHeaderFromToken(token);
-        this.httpClientService.get('/api/user/authentication').subscribe(
+        this.httpClientService.get('/api/authenticate').subscribe(
             (success: Response) => {
+                console.log(success.json());
+                
                 /* SAVE USER */
-                this.authenticationService.authenticateUser._id = success.json()['_id'];
-                this.authenticationService.authenticateUser.username = success.json()['username'];
-                this.authenticationService.authenticateUser.created_at = success.json()['created_at'];
-                this.authenticationService.authenticateUser.updated_at = success.json()['updated_at'];
+                this.authenticationService.authenticateUser._id = success.json()['user']['id'];
+                this.authenticationService.authenticateUser.username = success.json()['user']['username'];
+                this.authenticationService.authenticateUser.created_at = success.json()['user']['created_at'];
+                this.authenticationService.authenticateUser.updated_at = success.json()['user']['updated_at'];
 
                 /* SAVE ROLE */
-                let array_role = success.json()['role'];
+                let array_role = success.json()['roles'];
                 this.authenticationService.authenticateRole = [];
                 for (let i = 0; i < array_role.length; i++) {
                     this.authenticationService.authenticateRole.push(array_role[i]);

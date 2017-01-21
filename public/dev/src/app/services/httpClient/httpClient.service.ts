@@ -23,16 +23,16 @@ export class HttpClientService {
                     console.log(authenticationService.authenticateRole);
                     console.log("%c User", "color: green");
                     console.log(authenticationService.authenticateUser);
-                    this.get('/api/user/authentication').subscribe(
+                    this.get('/api/authenticate').subscribe(
                         (success: Response) => {
                             /* SAVE USER */
-                            authenticationService.authenticateUser._id = success.json()['_id'];
-                            authenticationService.authenticateUser.username = success.json()['username'];
-                            authenticationService.authenticateUser.created_at = success.json()['created_at'];
-                            authenticationService.authenticateUser.updated_at = success.json()['updated_at'];
+                            authenticationService.authenticateUser._id = success.json()['user']['id'];
+                            authenticationService.authenticateUser.username = success.json()['user']['username'];
+                            authenticationService.authenticateUser.created_at = success.json()['user']['created_at'];
+                            authenticationService.authenticateUser.updated_at = success.json()['user']['updated_at'];
 
                             /* SAVE ROLE */
-                            let array_role = success.json()['role'];
+                            let array_role = success.json()['roles'];
                             authenticationService.authenticateRole = [];
                             for (let i = 0; i < array_role.length; i++) {
                                 authenticationService.authenticateRole.push(array_role[i]);
