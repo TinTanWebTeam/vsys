@@ -9,10 +9,12 @@
 ## Official Documentation
 
 ### 1. config .env
-### 2. composer install
-### 3. Open Terminal: ng build --bh /home/ -o ../home -w
-### 4. Open Terminal: php artisan serve
-### 5. Access: http://localhost:8000
+### 2. create database
+### 3. composer install
+### 4. cd public/dev: npm install
+### 5. cd public/dev: ng build --bh /home/ -o ../home -w
+### 6. php artisan serve
+### 7. Access: http://localhost:8000
 
 Contact with me via [Facebook](http://facebook.com/nguyentrucxjnh).
 
