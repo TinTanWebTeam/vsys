@@ -2,7 +2,12 @@
 /public/storage
 /vendor
 /.idea
+/.vscode
 Homestead.json
 Homestead.yaml
 /public/dev/node_modules
 /public/home
+/documents/vsys.vux
+/documents/.vsys.vpp.lck
+/documents/vsys.vpp.bak*
+/documents/.~lock*

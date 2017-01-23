@@ -6,7 +6,7 @@ import { AuthenticationService } from '../services/authentication/authentication
 export class CanActivateViaProductType implements CanActivate {
 
     constructor(private authenticationService: AuthenticationService) { 
-
+        
     }
 
     canActivate() {

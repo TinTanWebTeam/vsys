@@ -16,6 +16,8 @@ import { ProductTypeComponent } from './components/productType/productType.compo
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CanActivateViaProductType } from './middlewares/CanActivateViaProductType.middleware';
+import { CollectionComponent } from './components/collection/collection.component';
+import { DeviceComponent } from './components/device/device.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { CanActivateViaProductType } from './middlewares/CanActivateViaProductTy
     ProductComponent,
     ProductTypeComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    CollectionComponent,
+    DeviceComponent
   ],
   imports: [
     BrowserModule,

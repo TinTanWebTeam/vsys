@@ -27,6 +27,33 @@ Route::group(['middleware' => 'jwt.auth'],function(){
     	error_log('========================');
         return response()->json(json_decode($_GET['param']), 200);
     });
+
+    Route::group(['middleware' => 'product'], function () {
+        Route::get('/product', 'ProductController@getAll');
+        Route::get('/product/{id}', 'ProductController@getOne');
+        Route::post('/product', 'ProductController@postAddOne');
+        Route::put('/product', 'ProductController@putUpdateOne');
+        Route::patch('/product', 'ProductController@patchDeactiveOne');
+        Route::delete('/product/{id}', 'ProductController@deleteDeleteOne');
+    });
+
+    Route::group(['middleware' => 'collection'], function () {
+        Route::get('/collection', 'CollectionController@getAll');
+        Route::get('/collection/{id}', 'CollectionController@getOne');
+        Route::post('/collection', 'CollectionController@postAddOne');
+        Route::put('/collection', 'CollectionController@putUpdateOne');
+        Route::patch('/collection', 'CollectionController@patchDeactiveOne');
+        Route::delete('/collection/{id}', 'CollectionController@deleteDeleteOne');
+    });
+    
+    Route::group(['middleware' => 'device'], function () {
+        Route::get('/device', 'DeviceController@getAll');
+        Route::get('/device/{id}', 'DeviceController@getOne');
+        Route::post('/device', 'DeviceController@postAddOne');
+        Route::put('/device', 'DeviceController@putUpdateOne');
+        Route::patch('/device', 'DeviceController@patchDeactiveOne');
+        Route::delete('/device/{id}', 'DeviceController@deleteDeleteOne');
+    });
 });
 
 

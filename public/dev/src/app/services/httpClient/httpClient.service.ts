@@ -31,10 +31,7 @@ export class HttpClientService {
                     this.get('/api/authenticate').subscribe(
                         (success: Response) => {
                             /* SAVE USER */
-                            authenticationService.authenticateUser.id = success.json()['user']['id'];
-                            authenticationService.authenticateUser.username = success.json()['user']['username'];
-                            authenticationService.authenticateUser.created_at = success.json()['user']['created_at'];
-                            authenticationService.authenticateUser.updated_at = success.json()['user']['updated_at'];
+                            authenticationService.authenticateUser = success.json()['user'];
 
                             /* SAVE ROLE */
                             let array_role = success.json()['roles'];
@@ -101,6 +98,12 @@ export class HttpClientService {
 
     put(url: string, data: any): Observable<Response> {
         return this._http.put(url, data, {
+            headers: this._headers
+        })
+    }
+
+    patch(url: string, data: any): Observable<Response> {
+        return this._http.patch(url, data, {
             headers: this._headers
         })
     }

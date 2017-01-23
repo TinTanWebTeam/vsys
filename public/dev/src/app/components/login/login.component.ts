@@ -4,15 +4,16 @@ import { Response } from "@angular/http";
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { HttpClientService } from '../../services/httpClient/httpClient.service';
 
-import { User } from '../../models/user.model';
-
 @Component({
     moduleId: module.id,
     selector: 'app-login',
     templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
-    public user: User = new User();
+    public user: any = {
+        username: "",
+        password: ""
+    };
 
     /**
      *
@@ -43,10 +44,7 @@ export class LoginComponent implements OnInit {
         this.httpClientService.get('/api/authenticate').subscribe(
             (success: Response) => {
                 /* SAVE USER */
-                this.authenticationService.authenticateUser.id = success.json()['user']['id'];
-                this.authenticationService.authenticateUser.username = success.json()['user']['username'];
-                this.authenticationService.authenticateUser.created_at = success.json()['user']['created_at'];
-                this.authenticationService.authenticateUser.updated_at = success.json()['user']['updated_at'];
+                this.authenticationService.authenticateUser = success.json()['user'];
 
                 /* SAVE ROLE */
                 let array_role = success.json()['roles'];

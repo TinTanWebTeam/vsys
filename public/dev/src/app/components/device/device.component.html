@@ -1,0 +1,137 @@
+<app-header></app-header>
+<app-aside></app-aside>
+
+<!-- content -->
+<div id="content" class="app-content" role="main">
+  <div class="app-content-body ">
+    <div class="bg-light lter b-b wrapper-md">
+      <h1 class="m-n font-thin h3">Device</h1>
+    </div>
+    <div class="wrapper-md">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading font-bold">Form Device</div>
+            <div class="panel-body">
+              <form class="bs-example form-horizontal">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label">Name</label>
+                      <div class="col-lg-10">
+                        <input type="text" class="form-control" [(ngModel)]="device.name" name="name">
+                        <span class="help-block m-b-none">Example block-level help text here.</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label">Description</label>
+                      <div class="col-lg-10">
+                        <input type="text" class="form-control" [(ngModel)]="device.description" name="description">
+                        <span class="help-block m-b-none">Example block-level help text here.</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label">Input</label>
+                      <div class="col-lg-10">
+                        <input type="text" class="form-control" [(ngModel)]="device.input" name="input">
+                        <span class="help-block m-b-none">Example block-level help text here.</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label">Output</label>
+                      <div class="col-lg-10">
+                        <input type="text" class="form-control" [(ngModel)]="device.output" name="output">
+                        <span class="help-block m-b-none">Example block-level help text here.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label">Collection</label>
+                      <div class="col-lg-10">
+                        <select [(ngModel)]="device.collect_id" name="collect_id" class="form-control m-b">
+                            <option *ngFor="let collection of collections" value="{{ collection.id }}">{{ collection.name }}</option>
+                        </select>
+                        <span class="help-block m-b-none">Example block-level help text here.</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label">IO Center</label>
+                      <div class="col-lg-10">
+                        <select [(ngModel)]="device.io_center_id" name="io_center_id" class="form-control m-b">
+                            <option *ngFor="let io_center of io_centers" value="{{ io_center.id }}">{{ io_center.name }}</option>
+                        </select>
+                        <span class="help-block m-b-none">Example block-level help text here.</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label">Parent</label>
+                      <div class="col-lg-10">
+                        <select [(ngModel)]="device.parent_id" name="parent_id" class="form-control m-b">
+                            <option *ngFor="let device of devices" value="{{ device.id }}">{{ device.description }}</option>
+                        </select>
+                        <span class="help-block m-b-none">Example block-level help text here.</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-lg-offset-2 col-lg-10">
+                        <button *ngIf="!isEdit" type="submit" class="btn m-b-xs w-xs btn-primary btn-rounded" (click)="addDevice($event)">Add</button>
+                        <button *ngIf="isEdit" class="btn m-b-xs w-xs btn-warning btn-rounded" (click)="updateDevice($event)">Update</button>
+                        <button *ngIf="isEdit" class="btn m-b-xs btn-rounded btn-default btn-addon" (click)="cancleEdit($event)"><i class="fa fa-ban"></i>Cancle</button>
+                        <button class="btn m-b-xs btn-rounded btn-default btn-addon" (click)="clearInput($event)"><i class="fa fa-eraser"></i>Clear</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading font-bold">
+              List Device
+            </div>
+            <div class="table-responsive">
+              <table class="table table-striped b-t b-b">
+                <thead>
+                  <tr>
+                    <th style="width:5%">ID</th>
+                    <th style="width:15%">Name</th>
+                    <th style="width:20%">Description</th>
+                    <th style="width:10%">Input</th>
+                    <th style="width:10%">Output</th>
+                    <th style="width:10%">Collection</th>
+                    <th style="width:10%">IO Center</th>
+                    <th style="width:10%">Parent</th>
+                    <th style="width:5%">Edit</th>
+                    <th style="width:5%">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let device of devices">
+                    <td>{{ device.id }}</td>
+                    <td>{{ device.name }}</td>
+                    <td>{{ device.description }}</td>
+                    <td>{{ device.input }}</td>
+                    <td>{{ device.output }}</td>
+                    <td>{{ device.collect_name }}</td>
+                    <td>{{ device.io_center_name }}</td>
+                    <td>{{ device.parent_name }}</td>
+                    <td><button class="btn btn-sm btn-primary" (click)="loadDevice(device.id)"><i class="fa fa-pencil"></i></button></td>
+                    <td><button class="btn btn-sm btn-danger" (click)="deactiveDevice(device.id)"><i class="fa fa-trash-o"></i></button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /content -->
+
+<app-footer></app-footer>

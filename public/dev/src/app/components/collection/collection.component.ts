@@ -5,19 +5,15 @@ import { AuthenticationService } from '../../services/authentication/authenticat
 import { HttpClientService } from '../../services/httpClient/httpClient.service';
 
 @Component({
-  moduleId: module.id,
-  selector: 'app-product',
-  templateUrl: './product.component.html'
+  selector: 'app-collection',
+  templateUrl: './collection.component.html'
 })
-export class ProductComponent implements OnInit {
-  public productTypes: any = [];
-  public products: any = [];
-  public product: any = {
+export class CollectionComponent implements OnInit {
+  public collections: any = [];
+  public collection: any = {
     name: "",
     description: "",
-    active: true,
-    product_type_name: "",
-    product_type_id: 0
+    active: true
   };
   public isEdit: boolean = false;
 
@@ -33,14 +29,12 @@ export class ProductComponent implements OnInit {
     this.loadData();
   }
 
-  public clearInput(event: Event){
+  public clearInput(event: Event) {
     event.preventDefault();
-    this.product = {
+    this.collection = {
       name: "",
       description: "",
-      active: true,
-      product_type_name: "",
-      product_type_id: 0
+      active: true
     };
   }
 
@@ -50,7 +44,7 @@ export class ProductComponent implements OnInit {
   }
 
   public loadData(): void {
-    this.httpClientService.get('/api/product').subscribe(
+    this.httpClientService.get('/api/collection').subscribe(
       (success: Response) => {
         this.reloadData(success.json());
       },
@@ -61,39 +55,32 @@ export class ProductComponent implements OnInit {
   }
 
   public reloadData(arr_datas): void {
-    this.productTypes.splice(0, this.productTypes.length);
-    for (let productType of arr_datas['productTypes']) {
-      this.productTypes.push(productType);
+    this.collections.splice(0, this.collections.length);
+    for (let collection of arr_datas['collections']) {
+      this.collections.push(collection);
     }
 
-    this.products.splice(0, this.products.length);
-    for (let product of arr_datas['products']) {
-      this.products.push(product);
-    }
-
-    this.product = {
+    this.collection = {
       name: "",
       description: "",
-      active: true,
-      product_type_name: "",
-      product_type_id: 0
+      active: true
     };
   }
 
-  public loadProduct(id: number): void {
-    let currentProduct = this.products.find(function (o) {
+  public loadCollection(id: number): void {
+    let currentCollection = this.collections.find(function (o) {
       return o.id == id;
     });
 
-    this.product = currentProduct;
+    this.collection = currentCollection;
 
     this.isEdit = true;
   }
 
-  public addProduct(event: Event): void {
+  public addCollection(event: Event): void {
     event.preventDefault();
 
-    this.httpClientService.post('/api/product', { "product": this.product }).subscribe(
+    this.httpClientService.post('/api/collection', { "collection": this.collection }).subscribe(
       (success: Response) => {
         this.reloadData(success.json());
       },
@@ -103,10 +90,10 @@ export class ProductComponent implements OnInit {
     );
   }
 
-  public updateProduct(event: Event): void {
+  public updateCollection(event: Event): void {
     event.preventDefault();
 
-    this.httpClientService.put('/api/product/', { "product": this.product} ).subscribe(
+    this.httpClientService.put('/api/collection/', { "collection": this.collection }).subscribe(
       (success: Response) => {
         this.reloadData(success.json());
       },
@@ -118,8 +105,8 @@ export class ProductComponent implements OnInit {
     this.isEdit = false;
   }
 
-  public deactiveProduct(id: number): void {
-    this.httpClientService.patch('/api/product', { "id": id }).subscribe(
+  public deactiveCollection(id: number): void {
+    this.httpClientService.patch('/api/collection', { "id": id }).subscribe(
       (success: Response) => {
         this.reloadData(success.json());
       },
@@ -129,8 +116,8 @@ export class ProductComponent implements OnInit {
     )
   }
 
-  public deleteProduct(id: number): void {
-    this.httpClientService.delete('/api/product/' + id).subscribe(
+  public deleteCollection(id: number): void {
+    this.httpClientService.delete('/api/collection/' + id).subscribe(
       (success: Response) => {
         this.reloadData(success.json());
       },
@@ -139,4 +126,5 @@ export class ProductComponent implements OnInit {
       }
     )
   }
+
 }

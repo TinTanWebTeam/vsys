@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { HttpClientService } from '../../services/httpClient/httpClient.service';
 import { Subscription } from 'rxjs';
-import { Role } from '../../models/role.model';
 
 @Component({
   moduleId: module.id,

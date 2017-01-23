@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { User } from '../../models/user.model';
-import { Role } from "../../models/role.model";
 
 @Injectable()
 export class AuthenticationService {
 
     public authenticate = new BehaviorSubject<Boolean>(false);
     public authenticate$ = this.authenticate.asObservable();
-    public authenticateRole: Role[] = [];
-    public authenticateUser: User = new User();
+    public authenticateRole: any = [];
+    public authenticateUser: any = null;
     public authenticateToken: string;
 
     constructor() {

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Role;
-use App\SubRole;
+use App\UserRole;
 use Hash;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -55,9 +55,9 @@ class AuthenticateController extends Controller
             return response()->json(['error' => 'token_absent'], $e->getStatusCode());
         }
 
-        $subroles = SubRole::where('user_id', $user->id)->pluck('role_id')->toArray();
+        $userroles = UserRole::where([['active', true],['user_id', $user->id]])->pluck('role_id')->toArray();
 
-        $roles = Role::whereIn('id', $subroles)->get()->toArray();
+        $roles = Role::whereIn('id', $userroles)->get()->toArray();
 
         return response()->json(['user' => $user, 'roles' => $roles], 201);
     }
